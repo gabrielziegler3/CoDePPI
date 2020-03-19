@@ -4,6 +4,18 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 
+def plot_batch(imgs):
+    """
+    Plot batch of images
+    """
+    _, axs = plt.subplots(5, 5, figsize=(10, 10))
+    axs = axs.flatten()
+    for img, ax in zip(imgs, axs):
+        ax.axis('off')
+        ax.imshow(img, cmap='gray')
+    plt.show()
+
+
 def interactive_mri(transposed_data):
     """
     Interactive MRI plot using Plotly
