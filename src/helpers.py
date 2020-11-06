@@ -17,7 +17,7 @@ def calculate_ser(signal, reconstructed_signal):
     #  decibel
     ser_db = 10 * np.log10(signal_error_ratio)
 
-    return signal_error_ratio, ser_db
+    return ser_db
 
 
 def calculate_psnr(img1, img2):
@@ -75,6 +75,23 @@ def calculate_ssim(img1, img2):
             return ssim(np.squeeze(img1), np.squeeze(img2))
     else:
         raise ValueError('Wrong input image dimensions.')
+
+
+def calculate_metrics(img1, img2):
+    print('==========================')
+    print(f'PSNR: {calculate_psnr(img1, img2)}')
+    print(f'PSSIM: {calculate_ssim(img1, img2)}')
+    print(f'PSER: {calculate_ser(img1, img2)}')
+    print('==========================')
+
+
+def zero_fill(b, samples_rows, rows, cols):
+    zero_filled = np.zeros((rows * cols), dtype="complex128")
+    zero_filled[samples_rows] = b
+    zero_filled = np.reshape(zero_filled, (rows, cols))
+    zero_filled = np.fft.ifft2(zero_filled)
+#    zero_filled = np.fft.fftshift(zero_filled)
+    return zero_filled
 
 
 # Deprecated
