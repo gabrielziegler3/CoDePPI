@@ -134,3 +134,6 @@ data/
 nohup.out
 
 src/mri_cs.py
+
+# MATLAB files
+*.m
