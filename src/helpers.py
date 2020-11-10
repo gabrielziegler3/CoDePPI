@@ -80,8 +80,8 @@ def calculate_ssim(img1, img2):
 def calculate_metrics(img1, img2):
     print('==========================')
     print(f'PSNR: {calculate_psnr(img1, img2)}')
-    print(f'PSSIM: {calculate_ssim(img1, img2)}')
-    print(f'PSER: {calculate_ser(img1, img2)}')
+    print(f'SSIM: {calculate_ssim(img1, img2)}')
+    print(f'SNR: {calculate_ser(img1, img2)}')
     print('==========================')
 
 
