@@ -21,18 +21,32 @@ def calculate_snr(signal, reconstructed_signal):
     return ser_db
 
 
-def calculate_metrics(img1, img2):
+def calculate_metrics_1d(img1, img2, verbose=True):
+    snr = calculate_snr(img1, img2)
+    mse = mean_squared_error(img1, img2)
+
+    if verbose:
+        print('============================')
+        print(f'SNR: {snr}')
+        print(f'MSE: {mse}')
+        print('============================')
+
+    return snr, mse
+
+
+def calculate_metrics(img1, img2, verbose=True):
     psnr = peak_signal_noise_ratio(img1, img2)
     img_ssim = ssim(img1, img2)
     snr = calculate_snr(img1, img2)
     mse = mean_squared_error(img1, img2)
 
-    print('============================')
-    print(f'PSNR: {psnr}')
-    print(f'SSIM: {img_ssim}')
-    print(f'SNR: {snr}')
-    print(f'MSE: {mse}')
-    print('============================')
+    if verbose:
+        print('============================')
+        print(f'PSNR: {psnr}')
+        print(f'SSIM: {img_ssim}')
+        print(f'SNR: {snr}')
+        print(f'MSE: {mse}')
+        print('============================')
 
     return psnr, img_ssim, snr, mse
 
