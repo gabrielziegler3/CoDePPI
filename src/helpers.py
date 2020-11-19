@@ -15,7 +15,7 @@ def calculate_snr(signal, reconstructed_signal):
     signal_energy = np.sum(np.abs(signal)**2)
     error_energy = np.sum(np.abs(signal - reconstructed_signal)**2)
     signal_error_ratio = signal_energy / error_energy
-    #  decibel
+    # decibel
     ser_db = 10 * np.log10(signal_error_ratio)
 
     return ser_db
@@ -35,7 +35,11 @@ def calculate_metrics_1d(img1, img2, verbose=True):
 
 
 def calculate_metrics(img1, img2, verbose=True):
-    psnr = peak_signal_noise_ratio(img1, img2)
+    max_val = 255
+    if img2.max() > max_val:
+        max_val = img2.max()
+
+    psnr = peak_signal_noise_ratio(img1, img2, data_range=max_val)
     img_ssim = ssim(img1, img2)
     snr = calculate_snr(img1, img2)
     mse = mean_squared_error(img1, img2)
