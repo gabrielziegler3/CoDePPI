@@ -42,6 +42,9 @@ def calculate_metrics(img1, img2, verbose=True):
     if isinstance(img2, Tensor):
         img2 = img2.cpu().detach().numpy()
 
+    img1 = np.array(img1, dtype=np.float64)
+    img2 = np.array(img2, dtype=np.float64)
+
     psnr = peak_signal_noise_ratio(img1, img2)
     img_ssim = ssim(img1, img2, data_range=img2.max() - img2.min())
     snr = calculate_snr(img1, img2)
@@ -64,6 +67,12 @@ def zero_fill(b, samples_rows, rows, cols):
     zero_filled = np.reshape(zero_filled, (rows, cols))
     zero_filled = np.fft.ifft2(zero_filled)
     return zero_filled
+
+
+def get_proportion(f_sampled, u_sampled):
+    prop = np.array(u_sampled).flatten(
+    ).shape[0] / np.array(f_sampled).flatten().shape[0]
+    return prop
 
 
 # Deprecated
