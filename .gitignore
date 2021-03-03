@@ -138,3 +138,7 @@ src/mri_cs.py
 # MATLAB files
 *.m
 *.mat
+
+
+*.png
+*.svg
