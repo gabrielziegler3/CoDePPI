@@ -1,0 +1,3 @@
+brain_path: /mri-reconstruction/mnt/FastMRI/brain
+knee_path: /mri-reconstruction/mnt/FastMRI/knee
+log_path: .
