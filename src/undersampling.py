@@ -1,8 +1,6 @@
 import numpy as np
 import scipy
 
-from helpers import get_fourier_transform
-
 
 def spiral_samples_trajectory(width=512,
                               height=512,

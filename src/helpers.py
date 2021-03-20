@@ -12,13 +12,12 @@ def calculate_snr(signal: np.ndarray, reconstructed_signal: np.ndarray) -> float
     """
     Takes two signals of same dimension and calculate the error between
     Returns:
-        signal to error ratio, signal to error ratio in db
+        signal to error ratio, signal to error ratio in dB
     """
-    # energia: somatorio do modulo ao quadrado
+    # energy: sum of the module squared
     signal_energy = np.sum(np.abs(signal)**2)
     error_energy = np.sum(np.abs(signal - reconstructed_signal)**2)
     signal_error_ratio = signal_energy / error_energy
-    # decibel
     ser_db = 10 * np.log10(signal_error_ratio)
 
     return ser_db
