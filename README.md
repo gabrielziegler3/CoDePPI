@@ -1,4 +1,4 @@
-# RMI Reconstrution with Compressed Sensing and GANs
+# MRI Reconstruction with Compressed Sensing and Prior Information
 
 ## Usage
 
