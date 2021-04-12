@@ -1,7 +1,7 @@
 import numpy as np
 import scipy
 
-from typing import Union, List, Any
+from typing import Union, List, Any, Tuple
 from skimage.metrics import structural_similarity as ssim
 from skimage.metrics import mean_squared_error
 from skimage.metrics import peak_signal_noise_ratio
@@ -37,7 +37,7 @@ def calculate_metrics_1d(gt_img, recon_img, verbose=True):
     return snr, mse
 
 
-def calculate_metrics(gt_img: np.ndarray, recon_img: np.ndarray, verbose=True) -> tuple:
+def calculate_metrics(gt_img: np.ndarray, recon_img: np.ndarray, verbose=True) -> Tuple:
     """
     Display PSNR, SSIM, SNR and MSE for reconstructed image
     against ground truth.
@@ -108,11 +108,12 @@ def get_proportion(f_sampled: np.ndarray, u_sampled: np.ndarray) -> float:
     return prop
 
 
-def create_mask(indices: Union[np.ndarray, List], rows=256, cols=256, transpose=False) -> np.ndarray:
+def create_mask(indices: Union[np.ndarray, List],
+                rows, cols, transpose=False) -> np.ndarray:
     """
     Create 2d mask from positive elements indices.
     """
-    mask = np.zeros((rows * cols), dtype=int)
+    mask = np.zeros((rows * cols), dtype=np.int16)
     mask[indices] = 1
     mask = np.reshape(mask, (rows, cols))
     if transpose:

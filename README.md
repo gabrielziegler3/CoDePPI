@@ -17,3 +17,11 @@ docker run -it -p 8888:8888 -v `pwd`:/mri-reconstruction --rm --detach --name mr
 ```
 http://localhost:8888/
 ```
+
+### Dictionary
+
+* `b (1d array) - refers to the measurements vector`
+* `samples_rows (1d array) - refers to the measurements positions in the image matrix`
+* `h - oftentimes refers to the (list of) sparsifying filters used`
+* `phi (1d array) - similar to samples_rows. Prior information matrix positions`
+* `tau (float) - factor to multiply values in phi positions`
