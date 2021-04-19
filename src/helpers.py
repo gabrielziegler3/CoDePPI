@@ -60,10 +60,11 @@ def calculate_metrics(gt_img: np.ndarray, recon_img: np.ndarray, verbose=True) -
     recon_img = np.array(recon_img, dtype=np.float64)
 
     psnr = peak_signal_noise_ratio(
-        gt_img, recon_img, data_range=recon_img.max() - recon_img.min()
-    )
+        gt_img, recon_img, data_range=gt_img.max()
+        )
     img_ssim = ssim(gt_img, recon_img,
-                    data_range=recon_img.max() - recon_img.min())
+                    data_range=gt_img.max()
+                    )
     snr = calculate_snr(gt_img, recon_img)
     mse = mean_squared_error(gt_img, recon_img)
 
@@ -134,3 +135,23 @@ def from_matlab(filename: str) -> np.ndarray:
     Load Matlab variable
     """
     return scipy.io.loadmat(filename)
+
+# def convert_from_ls(result):
+#     if 'original_width' not in result or 'original_height' not in result:
+#         return None
+#
+#     value = result['value']
+#     w, h = result['original_width'], result['original_height']
+#
+#     if all([key in value for key in ['x', 'y', 'width', 'height']]):
+#         return w * value['x'] / 100.0, \
+#             h * value['y'] / 100.0, \
+#             w * value['width'] / 100.0, \
+#             h * value['height'] / 100.0
+
+
+def convert_from_ls(x, y, shape):
+    w, h = shape
+    x = w * x / 100
+    y = h * y / 100
+    return x.astype(np.int32), y.astype(np.int32)
