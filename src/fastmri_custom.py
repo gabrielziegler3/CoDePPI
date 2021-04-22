@@ -13,7 +13,7 @@ from fastmri.data.subsample import create_mask_for_mask_type
 
 
 class AdaptedFastMRI:
-    def __init__(self):
+    def __init__(self, mask_type: str):
         """
         shape = (int, int)
         kspace = Tensor
@@ -27,6 +27,8 @@ class AdaptedFastMRI:
         b = np.array
         cropped_shape = (int, int)
         """
+        assert mask_type in ["equispaced", "random"], "Mask type not supported. Use either equispaced or random"
+        self.mask_type = mask_type
         self.shape = (0, 0)
         self.kspace = None
         self.masked_kspace = None
@@ -62,7 +64,7 @@ class AdaptedFastMRI:
             self.cropped_shape = self.gt_image.shape
 
         self.cropped_kspace = T.to_tensor(np.fft.fftshift(np.fft.fft2(self.gt_image)))
-        self.masked_cropped_kspace, self.mask = self.apply_mask(self.cropped_kspace, "equispaced")
+        self.masked_cropped_kspace, self.mask = self.apply_mask(self.cropped_kspace, self.mask_type)
         self.extract_measurements(self.masked_cropped_kspace)
 
         print(f"Using {100 * get_proportion(self.gt_image.flatten(), self.b)}% k-space points")
