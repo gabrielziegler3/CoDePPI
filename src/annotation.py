@@ -20,7 +20,7 @@ class Annotation():
         if self.crop_shape:
             self.crop_center(self.crop_shape)
 
-    def __str__(self):
+    def __str__(self) -> str:
         count_values = {}
         for k, v in self.annotation.items():
             count_values[k] = len(self.annotation[k])
@@ -62,7 +62,7 @@ class Annotation():
         self.shape = crop_shape
         self.annotation = cropped_annotation
 
-    def fill_polygons(self, points: List[List]):
+    def fill_polygons(self, points: List[List]) -> np.ndarray:
         mask = np.zeros(shape=self.shape, dtype=np.uint8)
         r, c = polygon(points[:, 0], points[:, 1], mask.shape)
         mask[r, c] = 1
@@ -73,7 +73,17 @@ class Annotation():
         mask[x, y] = 1
         return mask
 
-    def get_annotation(self, label: str):
+    def get_phi(self,) -> dict:
+        phi = {}
+        for k, v in self.annotation.items():
+            phi[k] = [np.sort(np.nonzero(annot.flatten())[0]) for annot in v]
+
+        return phi
+
+    def get_annotations(self) -> dict:
+        return self.annotation
+
+    def get_annotation_by_label(self, label: str) -> np.ndarray:
         return self.annotation[label]
 
     def disp_matrix(self, label: str, idx=0):
