@@ -37,6 +37,14 @@ def calculate_metrics_1d(gt_img, recon_img, verbose=True):
     return snr, mse
 
 
+def nmse(gt: np.ndarray, pred: np.ndarray) -> np.ndarray:
+    """
+    Extracted from FastMRI
+    Compute Normalized Mean Squared Error (NMSE)
+    """
+    return np.linalg.norm(gt - pred) ** 2 / np.linalg.norm(gt) ** 2
+
+
 def calculate_metrics(gt_img: np.ndarray, recon_img: np.ndarray, verbose=True) -> Tuple:
     """
     Display PSNR, SSIM, SNR and MSE for reconstructed image
@@ -66,6 +74,7 @@ def calculate_metrics(gt_img: np.ndarray, recon_img: np.ndarray, verbose=True) -
                     data_range=gt_img.max()
                     )
     snr = calculate_snr(gt_img, recon_img)
+    nmse_ = nmse(gt_img, recon_img)
     mse = mean_squared_error(gt_img, recon_img)
 
     if verbose:
@@ -73,13 +82,15 @@ def calculate_metrics(gt_img: np.ndarray, recon_img: np.ndarray, verbose=True) -
         print(f'PSNR: {psnr}')
         print(f'SSIM: {img_ssim}')
         print(f'SNR: {snr}')
+        print(f'NMSE: {nmse_}')
         print(f'MSE: {mse}')
         print('============================')
 
-    return psnr, img_ssim, snr, mse
+    return psnr, img_ssim, snr, nmse_, mse
 
 
-def zero_fill(b: np.ndarray, indices: Union[np.ndarray, List], rows: int, cols: int):
+def zero_fill(b: np.ndarray, indices: Union[np.ndarray, List],
+              rows: int, cols: int):
     """
     Args:
         b: 1d complex array of measurements
@@ -120,6 +131,18 @@ def create_mask(indices: Union[np.ndarray, List],
     if transpose:
         mask = mask.T
     return mask
+
+
+def crop_center(img: np.ndarray, new_shape: Tuple[int, int]) -> np.ndarray:
+    """
+    Crop real image 2d numpy
+    """
+    y, x = img.shape
+    new_x, new_y = new_shape
+    startx = x//2 - (new_x // 2)
+    starty = y//2 - (new_y // 2)
+    cropped_img = img[starty:starty+new_y, startx:startx+new_x]
+    return cropped_img
 
 
 def to_matlab(var: Any, var_name: str):

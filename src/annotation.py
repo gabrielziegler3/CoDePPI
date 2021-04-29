@@ -4,7 +4,7 @@ import matplotlib.pylab as plt
 
 from skimage.draw import polygon
 from collections import defaultdict
-from typing import Union, List, Tuple
+from typing import List, Tuple
 
 
 class Annotation():
