@@ -1,6 +1,36 @@
 import numpy as np
 import scipy
 
+from typing import Tuple
+
+
+def equispaced_mask(shape: Tuple[int, int],
+                    center_fraction: float = 0.08, acceleration: int = 4):
+    """
+
+    Extracted from FastMRI and adapted to return 2d array
+    """
+    num_cols = shape[1]
+    num_low_freqs = int(round(num_cols * center_fraction))
+
+    mask = np.zeros(num_cols, dtype=np.float32)
+    pad = (num_cols - num_low_freqs + 1) // 2
+    mask[pad:pad + num_low_freqs] = True
+
+    adjusted_accel = (acceleration * (num_low_freqs - num_cols)) / (
+        num_low_freqs * acceleration - num_cols
+    )
+
+    offset = np.random.randint(0, round(adjusted_accel))
+    accel_samples = np.arange(offset, num_cols - 1, adjusted_accel)
+    accel_samples = np.around(accel_samples).astype(np.uint)
+    mask[accel_samples] = True
+    mask = np.ones((shape)) * mask
+    # return shifted mask for our L1 step
+    mask = np.fft.fftshift(mask)
+
+    return mask
+
 
 def spiral_samples_trajectory(width=512,
                               height=512,

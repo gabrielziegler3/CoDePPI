@@ -41,7 +41,6 @@ class AdaptedFastMRI:
         self.b = None
         self.cropped_shape = (0, 0)
 
-
     def __call__(self, filename: str):
         """
         Load file and retrieve information
@@ -52,7 +51,7 @@ class AdaptedFastMRI:
             et_root = etree.fromstring(hf["ismrmrd_header"][()])
             # extract target image width, height from ismrmrd header
             enc = ["encoding", "encodedSpace", "matrixSize"]
-            self.shape= (
+            self.shape = (
                 int(et_query(et_root, enc + ["x"])),
                 int(et_query(et_root, enc + ["y"])),
             )
@@ -69,7 +68,6 @@ class AdaptedFastMRI:
 
         print(f"Using {100 * get_proportion(self.gt_image.flatten(), self.b)}% k-space points")
 
-
     def apply_mask(self, kspace, mask_type_str: str):
         """
         Works for "equispaced" and "random" masks
@@ -83,7 +81,6 @@ class AdaptedFastMRI:
 
         return masked_kspace, mask
 
-
     def zero_fill(self, masked_kspace: torch.Tensor):
         zero_filled = fastmri.ifft2c(masked_kspace)
         zero_filled = fastmri.fftshift(zero_filled)
@@ -93,10 +90,8 @@ class AdaptedFastMRI:
 
         return zero_filled
 
-
     def get_2dmask(self):
         return torch.ones(self.cropped_shape) * self.mask.squeeze() + 0.0
-
 
     def extract_measurements(self, masked_kspace):
         """
@@ -107,7 +102,6 @@ class AdaptedFastMRI:
         self.samples_rows = np.nonzero(
             T.tensor_to_complex_np(masked_kspace).flatten())[0]
         self.b = T.tensor_to_complex_np(masked_kspace).flatten()[self.samples_rows]
-
 
     # def crop_center(self):
     #     """
