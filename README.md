@@ -4,11 +4,11 @@ CoDePPI is a better prior information extraction algorithm that focuses to use m
 
 <table>
   <tr>
-    <td><img src="figures/segmentation.png" alt="2" scale=0.8></td>
-    <td><img src="figures/2d_weights.pdf" alt="2" scale=0.8></td>
-    <td><img src="figures/weight_surf.pdf" alt="2" scale=0.8></td>
-    <td><img src="figures/weighted_phi_surf.pdf" alt="2" scale=0.8></td>
-  </tr> 
+    <td><img src="./figures/segmentation.png" alt="2" height=auto width=1550></td>
+    <td><img src="./figures/2d_weights.png" alt="2" height=auto width=1350></td>
+    <td><img src="./figures/weight_surf.png" alt="2" height=auto width=1350></td>
+    <td><img src="./figures/weighted_phi_surf.png" alt="2" height=auto width=1350></td>
+  </tr>
 </table>
 
 ## Usage
