@@ -1,13 +1,26 @@
-# MRI Reconstruction with Compressed Sensing and Prior Information
+# Context-Dependent Probabilistic Prior Information (CoDePPI)
+
+CoDePPI is a better prior information extraction algorithm that focuses to use motion information from dynamic MRI scans.
+
+<table>
+  <tr>
+    <td><img src="figures/segmentation.png" alt="2" scale=0.8></td>
+    <td><img src="figures/2d_weights.pdf" alt="2" scale=0.8></td>
+    <td><img src="figures/weight_surf.pdf" alt="2" scale=0.8></td>
+    <td><img src="figures/weighted_phi_surf.pdf" alt="2" scale=0.8></td>
+  </tr> 
+</table>
 
 ## Usage
 
 ### Build docker container with
+
 ```bash
 docker build . -t mri-reconstruction:latest
 ```
 
 ### Spin up the container and run jupyter lab at port 8888
+
 ```bash
 docker run -it -p 8888:8888 -v `pwd`:/mri-reconstruction --rm --detach --name mri-reconstruction mri-reconstruction
 ```
