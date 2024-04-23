@@ -2,6 +2,8 @@
 
 CoDePPI is a better prior information extraction algorithm that focuses to use motion information from dynamic MRI scans.
 
+This work is part of my [Bachelor's Thesis](https://gabrielziegler3.github.io/publication/codeppi).
+
 <table>
   <tr>
     <td><img src="./figures/segmentation.png" alt="2" height=auto width=1550></td>
